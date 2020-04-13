@@ -36,7 +36,7 @@ namespace JnjStudyCompoundChecker
 
             services.AddDbContext<SafetyRepositoryContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SafetyRepositoryDbContext")));
-            
+            services.AddScoped<IMailService, MailService>();
             //services.AddScoped<ISftpService, SftpService>();
             //services.AddScoped<IMappingService, MappingService>();
             services.AddScoped<IProtocolCompoundService, ProtocolCompoundService>();

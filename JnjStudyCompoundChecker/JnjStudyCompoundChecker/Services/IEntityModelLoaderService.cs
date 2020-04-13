@@ -7,6 +7,6 @@ namespace JnjStudyCompoundChecker.Services
         string ReadLocalFile(string file);
         StreamReader GetStreamReader(string text);
         string GetSubString(string text, string startText, string endText, bool replace = false);
-        void LoadEntityModels(string file);
+        void GetEntityModels(string file);
     }
 }

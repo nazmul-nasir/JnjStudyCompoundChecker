@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Mail;
-using System.Text;
+using JnjStudyCompoundChecker.Constants;
 
 namespace JnjStudyCompoundChecker.Services
 {
     public interface IMailService
     {
-        SmtpClient GetSmtpServer();
-        MailMessage GetEmail();
+        SmtpClient GetSmtpClient();
+        MailMessage CreateMailMessage(Enums.MailBody mailBody, IEnumerable<string> protocolNames = null);
     }
 }

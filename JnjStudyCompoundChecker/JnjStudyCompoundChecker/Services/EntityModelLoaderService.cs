@@ -47,14 +47,14 @@ namespace JnjStudyCompoundChecker.Services
             return subStr;
         }
 
-        public void LoadEntityModels(string file)
+        public void GetEntityModels(string file)
         {
             LogHelper.PrintLog($"Start loading entity models for file: {file}");
 
             try
             {
                 StreamReader reader;
-                var _container = new ModelContainer();
+                var container = new ModelContainer();
                 var text = ReadLocalFile(file);
 
                 #region Load ClinicalTrialData
@@ -62,7 +62,7 @@ namespace JnjStudyCompoundChecker.Services
                 OldValue = Common.EndTag;
                 NewValue = Common.ClinicalTrialDataEnd;
                 var subStr = GetSubString(text, Common.ClinicalTrialDataStart, Common.EndTag, true);
-                _container.ClinicalTrialData = XmlSerializer.LoadClinicalTrialData(subStr);
+                container.ClinicalTrialData = XmlSerializer.LoadClinicalTrialData(subStr);
 
                 #endregion
 
@@ -72,33 +72,8 @@ namespace JnjStudyCompoundChecker.Services
                 if (!string.IsNullOrEmpty(subStr))
                 {
                     reader = GetStreamReader(subStr);
-                    _container.Compounds = XmlSerializer.Deserializer<Compound>(reader, RootName.Compounds);
-                    LogHelper.PrintLog($"Total Compound found: {_container.Compounds.Count}");
-                }
-
-                #endregion
-
-                #region TA
-
-                subStr = GetSubString(text, Common.TherapeuticAreasStart, Common.TherapeuticAreasEnd);
-                if (!string.IsNullOrEmpty(subStr))
-                {
-                    reader = GetStreamReader(subStr);
-                    _container.TherapeuticAreas =
-                        XmlSerializer.Deserializer<TherapeuticArea>(reader, RootName.TherapeuticAreas);
-                    LogHelper.PrintLog($"Total Therapeutic Area found: {_container.TherapeuticAreas.Count}");
-                }
-
-                #endregion
-
-                #region Indication
-
-                subStr = GetSubString(text, Common.IndicationsStart, Common.IndicationsEnd);
-                if (!string.IsNullOrEmpty(subStr))
-                {
-                    reader = GetStreamReader(subStr);
-                    _container.Indications = XmlSerializer.Deserializer<Indication>(reader, RootName.Indications);
-                    LogHelper.PrintLog($"Total Indication found: {_container.Indications.Count}");
+                    container.Compounds = XmlSerializer.Deserializer<Compound>(reader, RootName.Compounds);
+                    LogHelper.PrintLog($"Total Compound found: {container.Compounds.Count}");
                 }
 
                 #endregion
@@ -111,8 +86,8 @@ namespace JnjStudyCompoundChecker.Services
                 if (!string.IsNullOrEmpty(subStr))
                 {
                     reader = GetStreamReader(subStr);
-                    _container.Studies = XmlSerializer.Deserializer<Study>(reader, RootName.Studies);
-                    LogHelper.PrintLog($"Total Study found: {_container.Studies.Count}");
+                    container.Studies = XmlSerializer.Deserializer<Study>(reader, RootName.Studies);
+                    LogHelper.PrintLog($"Total Study found: {container.Studies.Count}");
                 }
 
                 #endregion

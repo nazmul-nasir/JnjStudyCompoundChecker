@@ -5,15 +5,16 @@ using JnjStudyCompoundChecker.Constants;
 using JnjStudyCompoundChecker.Helper;
 using JnjStudyCompoundChecker.Models.EntityModels;
 using JnjStudyCompoundChecker.Models.HelperModels;
+using JnjStudyCompoundChecker.Services.Interfaces;
 
-namespace JnjStudyCompoundChecker.Services
+namespace JnjStudyCompoundChecker.Services.Implementations
 {
     public class EntityModelLoaderService : IEntityModelLoaderService
     {
         private static string OldValue { get; set; }
         private static string NewValue { get; set; }
 
-        public string ReadLocalFile(string file)
+        private static string ReadLocalFile(string file)
         {
             try
             {
@@ -27,7 +28,7 @@ namespace JnjStudyCompoundChecker.Services
             }
         }
 
-        public StreamReader GetStreamReader(string text)
+        private static StreamReader GetStreamReader(string text)
         {
             var byteArray = Encoding.UTF8.GetBytes(text);
             var stream = new MemoryStream(byteArray);
@@ -35,7 +36,7 @@ namespace JnjStudyCompoundChecker.Services
             return reader;
         }
 
-        public string GetSubString(string text, string startText, string endText, bool replace = false)
+        private static string GetSubString(string text, string startText, string endText, bool replace = false)
         {
             var start = text.IndexOf(startText, StringComparison.Ordinal);
             if (start < 0) return string.Empty;
@@ -58,16 +59,13 @@ namespace JnjStudyCompoundChecker.Services
                 var text = ReadLocalFile(file);
 
                 #region Load ClinicalTrialData
-
                 OldValue = Common.EndTag;
                 NewValue = Common.ClinicalTrialDataEnd;
                 var subStr = GetSubString(text, Common.ClinicalTrialDataStart, Common.EndTag, true);
                 container.ClinicalTrialData = XmlSerializer.LoadClinicalTrialData(subStr);
-
                 #endregion
 
                 #region Compound
-
                 subStr = GetSubString(text, Common.CompoundsStart, Common.CompoundsEnd);
                 if (!string.IsNullOrEmpty(subStr))
                 {
@@ -75,11 +73,9 @@ namespace JnjStudyCompoundChecker.Services
                     container.Compounds = XmlSerializer.Deserializer<Compound>(reader, RootName.Compounds);
                     LogHelper.PrintLog($"Total Compound found: {container.Compounds.Count}");
                 }
-
                 #endregion
 
                 #region Study
-
                 OldValue = Common.CountryText;
                 NewValue = Common.StringText;
                 subStr = GetSubString(text, Common.StudiesStart, Common.StudiesEnd, true);
@@ -89,7 +85,6 @@ namespace JnjStudyCompoundChecker.Services
                     container.Studies = XmlSerializer.Deserializer<Study>(reader, RootName.Studies);
                     LogHelper.PrintLog($"Total Study found: {container.Studies.Count}");
                 }
-
                 #endregion
             }
             catch (Exception e)

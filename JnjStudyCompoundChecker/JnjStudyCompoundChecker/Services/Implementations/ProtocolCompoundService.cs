@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using JnjStudyCompoundChecker.DbContext;
 using JnjStudyCompoundChecker.Models.ResponseModels;
+using JnjStudyCompoundChecker.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace JnjStudyCompoundChecker.Services
+namespace JnjStudyCompoundChecker.Services.Implementations
 {
     public class ProtocolCompoundService : IProtocolCompoundService
     {
@@ -42,7 +43,7 @@ namespace JnjStudyCompoundChecker.Services
         {
             var responses = new List<ProtocolCompoundResponse>();
 
-            var newItem = new Func<dynamic, ProtocolCompoundResponse>(item =>
+            var getNewItem = new Func<dynamic, ProtocolCompoundResponse>(item =>
             {
                 var protocolCompoundResponse = new ProtocolCompoundResponse
                 {
@@ -50,6 +51,7 @@ namespace JnjStudyCompoundChecker.Services
                     ProtocolNumber = item.ProtocolNumber,
                     ProtocolSourceId = item.ProtocolSourceId
                 };
+
                 protocolCompoundResponse.CompoundResponses.Add(
                     new CompoundResponse
                     {
@@ -58,6 +60,7 @@ namespace JnjStudyCompoundChecker.Services
                         CompoundName = item.CompoundName,
                         CompoundSourceId = item.CompoundSourceId
                     });
+
                 return protocolCompoundResponse;
             });
             
@@ -70,7 +73,7 @@ namespace JnjStudyCompoundChecker.Services
 
                     if (currentItem == null)
                     {
-                        currentItem = newItem(item);
+                        currentItem = getNewItem(item);
                     }
                     else
                     {
@@ -92,7 +95,7 @@ namespace JnjStudyCompoundChecker.Services
                 }
                 else
                 {
-                    responses.Add(newItem(item));
+                    responses.Add(getNewItem(item));
                 }
             }
 

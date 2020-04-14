@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JnjStudyCompoundChecker.Models.AppSettingsModels;
-using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using JnjStudyCompoundChecker.Constants;
+using JnjStudyCompoundChecker.Models.AppSettingsModels;
+using JnjStudyCompoundChecker.Services.Interfaces;
+using Microsoft.Extensions.Options;
 
-namespace JnjStudyCompoundChecker.Services
+namespace JnjStudyCompoundChecker.Services.Implementations
 {
     public class MailService : IMailService
     {

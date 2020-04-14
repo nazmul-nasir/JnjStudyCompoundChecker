@@ -3,7 +3,8 @@ using System.IO;
 using System.Reflection;
 using JnjStudyCompoundChecker.DbContext;
 using JnjStudyCompoundChecker.Models.AppSettingsModels;
-using JnjStudyCompoundChecker.Services;
+using JnjStudyCompoundChecker.Services.Implementations;
+using JnjStudyCompoundChecker.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +30,7 @@ namespace JnjStudyCompoundChecker
                 .Build();
             #endregion
 
-            // create service collection and add services
+            // Create service collection and add services
             var services = new ServiceCollection().AddOptions();
             services.Configure<FileLookupPath>(Configuration.GetSection(nameof(FileLookupPath)));
             services.Configure<MailSettings>(Configuration.GetSection(nameof(MailSettings)));
@@ -38,12 +39,14 @@ namespace JnjStudyCompoundChecker
                 options.UseSqlServer(Configuration.GetConnectionString("SafetyRepositoryDbContext")));
             
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IFileLookupService, FileLookupService>();
             services.AddScoped<IEntityModelLoaderService, EntityModelLoaderService>();
             services.AddScoped<IProtocolCompoundService, ProtocolCompoundService>();
+            services.AddScoped<IStudyCompoundCheckerService, StudyCompoundCheckerService>();
             
             services.AddSingleton(Log.Logger);
 
-            // create service provider
+            // Create service provider
             ServiceProvider = services.BuildServiceProvider();
         }
     }

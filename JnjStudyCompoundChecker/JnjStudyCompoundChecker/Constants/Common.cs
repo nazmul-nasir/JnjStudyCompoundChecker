@@ -2,7 +2,7 @@
 {
     public class Common
     {
-        #region other
+        #region Other
         public const string CountryText = "Country";
         public const string StringText = "string";
         public const string ProtocolName = "<Protocol_Name>";
@@ -11,7 +11,7 @@
         public const string TrialFailuresNode = @"<ClinicalTrialFailures xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" correlationId=""{0}"" creationDateTime=""{1}"">";
         #endregion
 
-        #region entity nodes
+        #region Entity Nodes
         public const string ClinicalTrialDataStart = "<ClinicalTrialData";
         public const string ClinicalTrialDataEnd = "\"></ClinicalTrialData>";
         public const string EndTag = "\">";
@@ -22,7 +22,7 @@
         public const string StudiesEnd = "</Studies>";
         #endregion
 
-        #region clinical trial data attributes
+        #region Clinical Trial Data Attributes
         public const string CorrelationId = "correlationId";
         public const string CreationDateTime = "creationDateTime";
         public const string ClientName = "clientName";

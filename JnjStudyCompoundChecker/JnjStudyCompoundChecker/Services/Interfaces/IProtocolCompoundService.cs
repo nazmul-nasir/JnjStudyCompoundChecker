@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using JnjStudyCompoundChecker.Models.ResponseModels;
 
-namespace JnjStudyCompoundChecker.Services
+namespace JnjStudyCompoundChecker.Services.Interfaces
 {
     public interface IProtocolCompoundService
     {

@@ -2,7 +2,7 @@
 using System.Net.Mail;
 using JnjStudyCompoundChecker.Constants;
 
-namespace JnjStudyCompoundChecker.Services
+namespace JnjStudyCompoundChecker.Services.Interfaces
 {
     public interface IMailService
     {

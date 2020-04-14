@@ -31,7 +31,7 @@ namespace JnjStudyCompoundChecker.Services.Implementations
             return protocolsForMismatchCompounds;
         }
 
-        public Tuple<int, List<string>> Execute()
+        public Tuple<int, List<string>> ExecuteChecking()
         {
             var files = _lookupService.GetFiles();
             var totalProtocolsForMismatchCompounds = new List<string>();

@@ -26,7 +26,7 @@ namespace JnjStudyCompoundChecker
             {
                 ConfigureServices();
                 var studyCompoundCheckerService = ServiceProvider.GetService<IStudyCompoundCheckerService>();
-                var result = studyCompoundCheckerService.Execute();
+                var result = studyCompoundCheckerService.ExecuteChecking();
                 SendMail(result.Item1, result.Item2);
                 Log.CloseAndFlush();
             }
@@ -41,27 +41,36 @@ namespace JnjStudyCompoundChecker
 
         private static void SendMail(int mailFlag, IEnumerable<string> protocolNames = null)
         {
-            var mailService = ServiceProvider.GetService<IMailService>();
-            var mailBody = Enums.MailBody.None;
-
-            switch (mailFlag)
+            try
             {
-                case -1:
-                    mailBody = Enums.MailBody.ProcessingFailedBody;
-                    break;
-                case 0:
-                    mailBody = Enums.MailBody.FileNotFoundBody;
-                    break;
-                default:
-                    mailBody = Enums.MailBody.CompoundMismatchBody;
-                    break;
+                var mailBody = Enums.MailBody.None;
+                var mailService = ServiceProvider.GetService<IMailService>();
+
+                switch (mailFlag)
+                {
+                    case -1:
+                        mailBody = Enums.MailBody.ProcessingFailedBody;
+                        break;
+                    case 0:
+                        mailBody = Enums.MailBody.FileNotFoundBody;
+                        break;
+                    default:
+                        mailBody = Enums.MailBody.CompoundMismatchBody;
+                        break;
+                }
+
+                var message = mailService.CreateMailMessage(mailBody, protocolNames);
+                var client = mailService.GetSmtpClient();
+                client.Send(message);
+                LogHelper.PrintLog("Email sent.");
             }
-
-            var message = mailService.CreateMailMessage(mailBody, protocolNames);
-            var client = mailService.GetSmtpClient();
-            client.Send(message);
+            catch (Exception e)
+            {
+                LogHelper.PrintLog($"Error sending email. Details: {e}");
+                Environment.Exit(-1);
+            }
         }
-
+    
         private static void ConfigureServices()
         {
             #region Set startup path

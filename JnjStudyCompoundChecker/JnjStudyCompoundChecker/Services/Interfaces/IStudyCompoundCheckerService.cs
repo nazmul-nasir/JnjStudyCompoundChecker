@@ -5,6 +5,6 @@ namespace JnjStudyCompoundChecker.Services.Interfaces
 {
     public interface IStudyCompoundCheckerService
     {
-        Tuple<int, List<string>> Execute();
+        Tuple<int, List<string>> ExecuteChecking();
     }
 }

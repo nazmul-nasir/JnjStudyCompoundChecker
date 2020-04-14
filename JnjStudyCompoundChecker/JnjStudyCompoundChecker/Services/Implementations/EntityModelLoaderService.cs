@@ -48,7 +48,7 @@ namespace JnjStudyCompoundChecker.Services.Implementations
             return subStr;
         }
 
-        public void GetEntityModels(string file)
+        public ModelContainer GetEntityModels(string file)
         {
             LogHelper.PrintLog($"Start loading entity models for file: {file}");
 
@@ -86,13 +86,15 @@ namespace JnjStudyCompoundChecker.Services.Implementations
                     LogHelper.PrintLog($"Total Study found: {container.Studies.Count}");
                 }
                 #endregion
+                
+                LogHelper.PrintLog($"Completed loading entity models for file : {file}");
+                return container;
             }
             catch (Exception e)
             {
                 LogHelper.PrintLog($"Exception occurred while loading entity models. Details: {e}");
                 throw;
             }
-            LogHelper.PrintLog($"Completed loading entity models for file : {file}");
         }
     }
 }

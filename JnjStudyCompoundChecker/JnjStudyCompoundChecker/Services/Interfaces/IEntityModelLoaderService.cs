@@ -1,7 +1,9 @@
-﻿namespace JnjStudyCompoundChecker.Services.Interfaces
+﻿using JnjStudyCompoundChecker.Models.HelperModels;
+
+namespace JnjStudyCompoundChecker.Services.Interfaces
 {
     public interface IEntityModelLoaderService
     {
-        void GetEntityModels(string file);
+        ModelContainer GetEntityModels(string file);
     }
 }

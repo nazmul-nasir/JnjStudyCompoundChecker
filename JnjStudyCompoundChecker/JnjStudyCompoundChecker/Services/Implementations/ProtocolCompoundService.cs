@@ -11,19 +11,19 @@ namespace JnjStudyCompoundChecker.Services.Implementations
 {
     public class ProtocolCompoundService : IProtocolCompoundService
     {
-        private SafetyRepositoryContext Context { get; set; }
+        private SafetyRepositoryContext Context { get; }
 
         public ProtocolCompoundService(SafetyRepositoryContext context)
         {
             Context = context;
         }
 
-        public async Task<List<ProtocolCompoundResponse>> GetProtocolCompoundResponse(List<string> protocolNumbers, DateTime dateTime)
+        public async Task<List<ProtocolCompoundResponse>> GetProtocolCompoundResponse(List<string> protocolNumbers)
         {
             var result = await (from pc in Context.ProtocolCompound
                                 join p in Context.Protocol on pc.ProtocolsId equals p.Id
                                 join c in Context.Compound on pc.CompoundsId equals c.Id
-                                where protocolNumbers.Contains(p.Number) && pc.Created.Date >= dateTime.Date
+                                where protocolNumbers.Contains(p.Number) 
                                   select new 
                                   {
                                       ProtocolId = pc.ProtocolsId,

@@ -11,6 +11,7 @@
 
         public enum MailBody
         {
+            None,
             FileNotFoundBody,
             ProcessingFailedBody,
             CompoundMismatchBody

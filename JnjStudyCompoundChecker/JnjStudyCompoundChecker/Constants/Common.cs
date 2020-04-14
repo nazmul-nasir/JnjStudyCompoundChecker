@@ -5,6 +5,8 @@
         #region Other
         public const string CountryText = "Country";
         public const string StringText = "string";
+        public const string Ctms = "Ctms_";
+        public const string _2020 = "_2020";
         public const string ProtocolName = "<Protocol_Name>";
         public const string EnvironmentName = "<Environment_Name>";
         public const string TrialDataNode = @"<ClinicalTrialData correlationId=""{0}"" creationDateTime=""{1}"" clientName=""{2}"" clientType=""{3}"" notificationEmail=""{4}"">";
